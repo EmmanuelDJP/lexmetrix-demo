@@ -1,55 +1,28 @@
 'use client';
 import { useState } from 'react';
 
-// --- BASE DE DATOS SIMULADA (Tus JSONs pre-procesados) ---
+// --- BASE DE DATOS SIMULADA (3 Casos Estratégicos) ---
 const CASOS_DEMO = [
   {
     id: "civil_01",
-    titulo: "1. Caso Civil - Vicio de Indivisibilidad (Trampa Oculta)",
+    titulo: "1. Caso Civil - Vicio de Indivisibilidad",
     materia: "Primera Sala (Civil)",
     texto_expediente: "Recurso de casación contra sentencia de mayo 2024 sobre demanda en partición de bienes. Condena al pago de RD$ 1,000,000.00. La parte recurrente argumenta interés casacional, pero la parte recurrida alega falta de notificación del emplazamiento a uno de los co-herederos (Juan Pérez).",
-    dictamen: `**SUPREMA CORTE DE JUSTICIA**
-**PRIMERA SALA**
-
-**RESOLUCIÓN DE ADMISIBILIDAD**
-
-En la ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, a la fecha de la presente resolución.
-
-Visto el recurso de casación interpuesto contra la sentencia dictada en mayo de 2024.
-
-**CONSIDERANDO PRIMERO:** Que el recurso de casación en materia civil es admisible cuando la cuantía excede cincuenta (50) salarios mínimos (Art. 11.3, Ley núm. 2-23). Considerando el salario de 2024, el umbral es RD$1,249,500.00. La condena de RD$1,000,000.00 es inferior al mínimo requerido. La simple invocación de interés casacional no subsana este defecto de orden público.
-
-**CONSIDERANDO SEGUNDO:** Que, adicionalmente, en litigios indivisibles como la partición, la omisión de emplazamiento a un co-heredero vulnera el derecho de defensa y el principio contradictorio, acarreando la caducidad total conforme a los Arts. 19, 20 y 45.
-
-**POR TANTO:** La Primera Sala de la Suprema Corte de Justicia, en atribuciones que le confiere la Ley núm. 2-23,
-
-**RESUELVE:**
-**PRIMERO:** DECLARAR INADMISIBLE Y CADUCO el recurso de casación por las razones expuestas.
-**SEGUNDO:** Condenar a la parte recurrente al pago de costas.`
+    dictamen: `**SUPREMA CORTE DE JUSTICIA**\n**PRIMERA SALA**\n\n**RESOLUCIÓN DE ADMISIBILIDAD**\n\nEn la ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, a la fecha de la presente resolución.\n\nVisto el recurso de casación interpuesto contra la sentencia dictada en mayo de 2024.\n\n**CONSIDERANDO PRIMERO:** Que el recurso de casación en materia civil es admisible cuando la cuantía excede cincuenta (50) salarios mínimos (Art. 11.3, Ley núm. 2-23). Considerando el salario de 2024, el umbral es RD$1,249,500.00. La condena de RD$1,000,000.00 es inferior al mínimo requerido. La simple invocación de interés casacional no subsana este defecto de orden público.\n\n**CONSIDERANDO SEGUNDO:** Que, adicionalmente, en litigios indivisibles como la partición, la omisión de emplazamiento a un co-heredero vulnera el derecho de defensa y el principio contradictorio, acarreando la caducidad total conforme a los Arts. 19, 20 y 45.\n\n**POR TANTO:** La Primera Sala de la Suprema Corte de Justicia, en atribuciones que le confiere la Ley núm. 2-23,\n\n**RESUELVE:**\n**PRIMERO:** DECLARAR INADMISIBLE Y CADUCO el recurso de casación por las razones expuestas.\n**SEGUNDO:** Condenar a la parte recurrente al pago de costas.`
   },
   {
     id: "laboral_01",
-    titulo: "2. Caso Laboral - Doble Riesgo (Cuantía + Plazo)",
+    titulo: "2. Caso Laboral - Riesgo de Cuantía (< 20 Salarios)",
     materia: "Tercera Sala (Laboral)",
-    texto_expediente: "Recurso de casación laboral por despido injustificado del año 2023. La corte a qua condenó al empleador al pago de RD$ 350,000.00. El recurso fue depositado en la Secretaría de la Corte veinticinco (25) días después de la notificación de la sentencia.",
-    dictamen: `**SUPREMA CORTE DE JUSTICIA**
-**TERCERA SALA**
-
-**RESOLUCIÓN DE ADMISIBILIDAD**
-
-En la ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, a la fecha de la presente resolución.
-
-Visto el recurso de casación interpuesto contra la sentencia dictada en 2023.
-
-**CONSIDERANDO PRIMERO:** Que en materia laboral, el recurso de casación solo es admisible si el monto de la condena excede los veinte (20) salarios mínimos. Para el año 2023 (salario de RD$ 24,150.00), el umbral de admisibilidad es de RD$ 483,000.00. Al ser la condena de RD$ 350,000.00, resulta inferior al umbral legal exigido.
-
-**CONSIDERANDO SEGUNDO:** Que, a mayor abundamiento, se constata que el recurso fue depositado veinticinco (25) días después de la notificación, excediendo el plazo perentorio de veinte (20) días establecido en la Ley núm. 2-23, configurándose la extemporaneidad y caducidad del mismo.
-
-**POR TANTO:** La Tercera Sala de la Suprema Corte de Justicia, en atribuciones que le confiere la Ley núm. 2-23,
-
-**RESUELVE:**
-**PRIMERO:** DECLARAR INADMISIBLE Y CADUCO el recurso de casación por insuficiencia de cuantía y extemporaneidad.
-**SEGUNDO:** Ordenar el archivo definitivo del expediente.`
+    texto_expediente: "Recurso de casación laboral por despido injustificado del año 2024. La corte a qua condenó al empleador al pago de RD$ 150,000.00. El recurso invoca violaciones constitucionales y el Art. 12 sobre interés casacional para justificar su admisibilidad.",
+    dictamen: `**SUPREMA CORTE DE JUSTICIA**\n**TERCERA SALA**\n\n**RESOLUCIÓN DE ADMISIBILIDAD**\n\nEn la ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, a la fecha de la presente resolución.\n\nVisto el recurso de casación interpuesto contra la sentencia dictada en 2024.\n\n**CONSIDERANDO PRIMERO:** Que la sentencia impugnada condena a la parte recurrente al pago de RD$ 150,000.00. Que para la materia laboral, el umbral mínimo de admisibilidad es de veinte (20) salarios mínimos, lo que para 2024 equivale a RD$ 499,800.00.\n\n**CONSIDERANDO SEGUNDO:** Que el monto condenado no supera el umbral legalmente establecido, haciendo el recurso inadmisible. La invocación del interés casacional (Art. 12, Ley núm. 2-23) no subsana la falta de cuantía mínima exigida por la ley.\n\n**POR TANTO:** La Tercera Sala de la Suprema Corte de Justicia,\n\n**RESUELVE:**\n**PRIMERO:** DECLARAR INADMISIBLE el recurso de casación por insuficiencia de cuantía.\n**SEGUNDO:** Condenar a la parte recurrente al pago de las costas.`
+  },
+  {
+    id: "civil_02",
+    titulo: "3. Caso Civil - Condena Millonaria (Trampa de Plazo)",
+    materia: "Primera Sala (Civil)",
+    texto_expediente: "Recurso de casación comercial. Condena de RD$ 5,500,000.00 (Supera ampliamente los 50 salarios). La sentencia de la Corte de Apelación fue notificada el 1 de marzo de 2024. El recurso fue depositado en secretaría el 28 de marzo de 2024.",
+    dictamen: `**SUPREMA CORTE DE JUSTICIA**\n**PRIMERA SALA**\n\n**RESOLUCIÓN DE ADMISIBILIDAD**\n\nEn la ciudad de Santo Domingo de Guzmán, Distrito Nacional, República Dominicana, a la fecha de la presente resolución.\n\nVisto el recurso de casación interpuesto contra la sentencia dictada en 2024.\n\n**CONSIDERANDO PRIMERO:** Que si bien la condena pecuniaria (RD$ 5,500,000.00) supera holgadamente el umbral de los cincuenta (50) salarios mínimos exigidos por el Art. 11.3 de la Ley núm. 2-23, el tribunal debe verificar de oficio el cumplimiento de los plazos procesales.\n\n**CONSIDERANDO SEGUNDO:** Que el artículo 14 de la Ley núm. 2-23 establece un plazo perentorio de veinte (20) días hábiles para la interposición del recurso. Habiéndose notificado la sentencia el 1 de marzo y depositado el recurso el 28 de marzo, el plazo se encontraba vencido, configurándose la extemporaneidad.\n\n**POR TANTO:** La Primera Sala de la Suprema Corte de Justicia,\n\n**RESUELVE:**\n**PRIMERO:** DECLARAR CADUCO el recurso de casación por haber sido interpuesto fuera del plazo legal.\n**SEGUNDO:** Condenar a la parte recurrente al pago de las costas.`
   }
 ];
 
@@ -58,13 +31,18 @@ export default function LexMetrixDemo() {
   const [isAuditing, setIsAuditing] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
+  // 👇 PON TU NÚMERO AQUÍ (Sin el +, con el código de área, ej. 18091234567)
+  const miNumeroWhatsApp = "829-406-7883"; 
+  const mensajePredefinido = "Hola Emmanuel. Vi el demo de LexMetrix y me interesa hacer una prueba gratuita con un recurso de casación real que tengo. ¿Cómo procedemos?";
+  const linkWhatsApp = `https://wa.me/${miNumeroWhatsApp}?text=${encodeURIComponent(mensajePredefinido)}`;
+
   const ejecutarAuditoria = () => {
     setIsAuditing(true);
     setShowResult(false);
     setTimeout(() => {
       setIsAuditing(false);
       setShowResult(true);
-    }, 2800); // 2.8s de tensión psicológica
+    }, 2800);
   };
 
   return (
@@ -80,7 +58,6 @@ export default function LexMetrixDemo() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Panel Izquierdo */}
           <div className="col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200 h-fit">
             <h2 className="text-lg font-bold mb-4 text-slate-800 flex items-center gap-2">
               <span className="bg-slate-100 text-slate-600 px-2 py-1 rounded text-sm">1</span> 
@@ -120,9 +97,7 @@ export default function LexMetrixDemo() {
             </div>
           </div>
 
-          {/* Panel Derecho */}
           <div className="col-span-1 lg:col-span-2 space-y-6">
-            
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Expediente de Entrada ({casoActivo.materia})</h3>
               <p className="text-slate-700 leading-relaxed bg-slate-50 p-5 rounded-lg border border-slate-100 text-lg">
@@ -133,11 +108,6 @@ export default function LexMetrixDemo() {
             <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 min-h-[400px] flex flex-col">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">Dictamen de LexMetrix</h3>
-                {showResult && (
-                  <span className="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full animate-fade-in">
-                    ⚡ Completado en 2.8s
-                  </span>
-                )}
               </div>
               
               {isAuditing && (
@@ -161,13 +131,13 @@ export default function LexMetrixDemo() {
                     </pre>
                   </div>
                   
-                  {/* Call To Action Agresivo */}
                   <div className="mt-8 bg-blue-50 border border-blue-100 rounded-lg p-6 text-center">
                     <h4 className="text-lg font-bold text-blue-900 mb-2">¿Vas a someter un recurso pronto? No te arriesgues.</h4>
                     <p className="text-blue-700 mb-4 text-sm">LexMetrix detecta vicios letales antes de que la Suprema rechace tu caso y te condene al pago de costas.</p>
                     <a 
-                      href="#" 
-                      onClick={(e) => { e.preventDefault(); alert('Aquí irá tu enlace de WhatsApp (ej. wa.me/1809XXX)'); }}
+                      href={linkWhatsApp}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow transition-colors"
                     >
                       Audita tu caso real GRATIS (Vía WhatsApp)
@@ -182,7 +152,6 @@ export default function LexMetrixDemo() {
                 </div>
               )}
             </div>
-            
           </div>
         </div>
       </div>
