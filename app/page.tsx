@@ -31,10 +31,14 @@ export default function LexMetrixDemo() {
   const [isAuditing, setIsAuditing] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
-  // 👇 PON TU NÚMERO AQUÍ (Sin el +, con el código de área, ej. 18091234567)
-  const miNumeroWhatsApp = "829-406-7883"; 
+  // 👇 REGLA ESTRICTA: Exactamente 11 dígitos. Sin +, sin espacios, sin guiones. 
+  // Ejemplo: "18091234567" o "18291234567"
+  const miNumeroWhatsApp = "18294067883"; 
+  
   const mensajePredefinido = "Hola Emmanuel. Vi el demo de LexMetrix y me interesa hacer una prueba gratuita con un recurso de casación real que tengo. ¿Cómo procedemos?";
-  const linkWhatsApp = `https://wa.me/${miNumeroWhatsApp}?text=${encodeURIComponent(mensajePredefinido)}`;
+  
+  // Endpoint de API robusto (Reemplaza el wa.me)
+  const linkWhatsApp = `https://api.whatsapp.com/send?phone=${miNumeroWhatsApp}&text=${encodeURIComponent(mensajePredefinido)}`;
 
   const ejecutarAuditoria = () => {
     setIsAuditing(true);
