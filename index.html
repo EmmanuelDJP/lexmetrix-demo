@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LexMetrix Terminal</title>
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --terminal-bg: #1a1a1a;
+            --text-main: #e0e0e0;
+            --accent: #00ffcc;
+            --danger: #ff4b4b;
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-family: var(--font-mono);
+            font-size: 24px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subtitle {
+            font-family: var(--font-mono);
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--accent);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--terminal-bg);
+            border: 1px solid #333;
+            color: white;
+            font-family: var(--font-sans);
+            font-size: 16px;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        button {
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 12px 20px;
+            font-family: var(--font-mono);
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            align-self: flex-start;
+        }
+
+        button:hover {
+            background-color: var(--accent);
+            color: var(--bg-color);
+        }
+
+        /* Ilusión de procesamiento */
+        .loader-container {
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--terminal-bg);
+            border-left: 4px solid var(--accent);
+            font-family: var(--font-mono);
+            font-size: 14px;
+        }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        /* Resultados */
+        #resultado-auditoria {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .dictamen-box {
+            background-color: var(--terminal-bg);
+            border: 1px solid #333;
+            padding: 30px;
+            border-radius: 4px;
+            line-height: 1.6;
+        }
+
+        .dictamen-box h3 {
+            font-family: var(--font-mono);
+            color: var(--text-main);
+            margin-top: 0;
+            border-bottom: 1px dashed #555;
+            padding-bottom: 15px;
+        }
+
+        .dictamen-box h4 {
+            color: var(--accent);
+            font-family: var(--font-mono);
+            margin-top: 25px;
+        }
+
+        .paywall-box {
+            background-color: #1a0f0f;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 25px;
+            border-radius: 4px;
+            text-align: center;
+            font-family: var(--font-mono);
+            margin-top: 25px;
+        }
+
+        .paywall-box h4 {
+            margin: 0 0 10px 0;
+            color: var(--danger);
+        }
+
+        .paywall-text {
+            color: #e0e0e0;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>⚖️ LexMetrix</h1>
+        <div class="subtitle">Auditoría Jurídica. Protocolo de Caja Negra (Ley 2-23).</div>
+
+        <div class="input-group">
+            <label for="query-input">INGRESE PARÁMETRO DE AUDITORÍA:</label>
+            <input type="text" id="query-input" value="¿Qué nivel de rigor aplica la Primera Sala frente a los vicios de forma al interponer el recurso?">
+            <button id="btn-auditar" onclick="ejecutarAuditoria()">EJECUTAR AUDITORÍA</button>
+        </div>
+
+        <div id="loader" class="loader-container">
+            <div id="status-1" style="color: #888;">> Conectando con bóveda vectorial ChromaDB...</div>
+            <div id="status-2" style="display: none; color: #888;">> Extrayendo ratio decidendi implícita...</div>
+            <div id="status-3" style="display: none; color: #888;">> Aplicando filtros Ley 2-23 (Magistrado de Admisiones)...</div>
+            <div class="blink" style="color: var(--accent); margin-top: 10px;">PROCESANDO DICTAMEN █</div>
+        </div>
+
+        <div id="resultado-auditoria">
+            </div>
+    </div>
+
+    <script>
+        // La base de datos simulada (Mock Data)
+        const casoEstrellaDemo = {
+            respuesta: `
+                <div class="dictamen-box">
+                    <h3>DICTAMEN LEXMETRIX</h3>
+                    <p><strong>Auditoría de Inadmisibilidad (Ley 2-23) - Primera Sala SCJ</strong></p>
+                    
+                    <p>La Primera Sala aplica un <strong>rigor formal condicionado y pragmático</strong>. No operan bajo una política de rechazo ciego por tecnicismos, sino bajo el principio rector del Artículo 88 de la Ley 2-23: <em>"No hay nulidad sin agravio"</em>.</p>
+
+                    <h4>Hallazgos de la Bóveda Jurisprudencial:</h4>
+                    <ul>
+                        <li style="margin-bottom: 10px;"><strong>Rigor en la Demanda:</strong> La Sala es implacable contra las argumentaciones vagas. Se han detectado rechazos de oficio cuando la parte invoca la inadmisibilidad sin especificar los presupuestos normativos (ej. limitarse a citar leyes derogadas como la 491-2008).</li>
+                        <li><strong>Filtro de Viabilidad Pragmático:</strong> Un vicio de forma en la notificación o interposición (ej. omisión de plazos en el acto) <strong>no genera la inadmisibilidad automática</strong> si el recurrente logró interponer el recurso en tiempo hábil. La Sala exige que se pruebe la vulneración real al derecho de defensa.</li>
+                    </ul>
+
+                    <p style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #333;"><strong>Conclusión del Magistrado de Admisiones:</strong> El umbral de viabilidad formal prioriza el derecho sustantivo frente a las omisiones clericales inofensivas, pero castiga con rechazo inmediato la falta de especificidad procesal en los medios de defensa.</p>
+                </div>
+            `,
+            bloqueoCensura: `
+                <div class="paywall-box">
+                    <h4>🛑 BLOQUEO DE EXTRACCIÓN ACTIVADO</h4>
+                    <p style="letter-spacing: 4px; margin-bottom: 15px;">[ █ █ █ █ █ █ █ █ █ █ █ █ █ ]</p>
+                    <p class="paywall-text"><strong>AUDITORÍA PARCIAL.</strong> Para visualizar los 3 expedientes exactos que sustentan este perfil, extraer la matriz de viabilidad y descargar las sentencias íntegras originales en PDF, se requiere <strong>Acceso Nivel 2</strong>.</p>
+                </div>
+            `
+        };
+
+        function ejecutarAuditoria() {
+            const btn = document.getElementById('btn-auditar');
+            const loader = document.getElementById('loader');
+            const resultado = document.getElementById('resultado-auditoria');
+            const s1 = document.getElementById('status-1');
+            const s2 = document.getElementById('status-2');
+            const s3 = document.getElementById('status-3');
+
+            // Resetear UI
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            resultado.style.display = 'none';
+            loader.style.display = 'flex';
+            
+            s1.style.display = 'block';
+            s2.style.display = 'none';
+            s3.style.display = 'none';
+
+            // Ilusión de procesamiento cognitivo (Timers)
+            setTimeout(() => { s2.style.display = 'block'; }, 800);
+            setTimeout(() => { s3.style.display = 'block'; }, 1800);
+
+            // Entrega del dictamen final
+            setTimeout(() => {
+                loader.style.display = 'none';
+                resultado.innerHTML = casoEstrellaDemo.respuesta + casoEstrellaDemo.bloqueoCensura;
+                resultado.style.display = 'block';
+                
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                btn.innerText = 'NUEVA AUDITORÍA';
+            }, 3000); // 3 segundos de espera total
+        }
+    </script>
+</body>
+</html>
